@@ -3,4 +3,11 @@ const nextConfig = {
   reactStrictMode: true,
 }
 
-module.exports = nextConfig
+module.exports = {
+  images: {
+    domains: ["image.tmdb.org", "freepnglogos.com"]
+  },
+  compiler: {
+    styledComponents: true
+  }
+}
