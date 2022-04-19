@@ -19,7 +19,7 @@ function useSpotify() {
       }
     }
 
-    console.log('session:  ', session);
+    // console.log('session:  ', session);
 
     spotifyApi.setAccessToken(session?.user.accessToken);
 
