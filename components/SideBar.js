@@ -38,10 +38,19 @@ function SideBar() {
 
   }, [session, spotifyApi]);
 
+  const handleSearch = () => {
+    spotifyApi.searchTracks('zac brown')
+    .then(function(data) {
+      console.log('data.body:  ', data.body);
+    }, function(err) {
+      console.log('Something went wrong!', err);
+    });
+  }
+
   return (
     <div className='text-gray-500 p-5 text-xs lg:text-sm border-r
       border-gray-900 overflow-y-scroll scrollbar-hide h-screen
-      sm:max-w-[12rem] lg:max-w-[15rem] hidden md:inline-flex mb-60
+      sm:max-w-[12rem] lg:max-w-[15rem] hidden md:inline-flex pb-24
     '>
       <div className='space-y-4'>
         {/* <button 
@@ -55,7 +64,10 @@ function SideBar() {
           <p>Home</p>
         </button>
         <button className='flex items-center space-x-2 hover:text-white'>
-          <SearchIcon className='h-5 w-5' />
+          <SearchIcon 
+            className='h-5 w-5'
+            onClick={handleSearch}
+          />
           <p>Search</p>
         </button>
         <button className='flex items-center space-x-2 hover:text-white'>
