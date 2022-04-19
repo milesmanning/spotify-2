@@ -5,8 +5,8 @@ import { currentTrackIdState, isPlayingState } from '../atoms/songAtom';
 
 
 function Song({ track, index }) {
+  
   const spotifyApi = useSpotify();
-
   const [currentTrackId, setCurrentTrackId] = useRecoilState(currentTrackIdState);
   const [isPlaying, setIsPlaying] = useRecoilState(isPlayingState);
 
