@@ -1,16 +1,21 @@
 import  SideBar from '../components/SideBar';
 import Player from '../components/Player';
+import AccountHeader from '../components/AccountHeader';
 
 function Layout({ children }) {
+  const loginName = children.type.name;
+
   return (
     <div className='bg-black h-screen overflow-hidden'>
-      <main className='flex'>
-        <SideBar />
-        {children}
-      </main>
-      <div className='sticky bottom-0'>
-        <Player />
-      </div>
+      { loginName === "Login" ?
+        children :
+        <main className='flex'>
+          <AccountHeader /> 
+          <SideBar />
+          <Player />
+          {children}
+        </main>
+      }
     </div>
   );
 }

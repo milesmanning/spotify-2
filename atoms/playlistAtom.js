@@ -5,12 +5,12 @@ export const playlistState = atom({
   default: null
 });
 
-// export const selectedPlaylistState = atom({
-//   key: "selectedPlaylistAtomState",
-//   default:  null
-// })
-
 export const playlistIdState = atom({
   key: "playlistIdState",
-  default: "37i9dQZF1DX8S0uQvJ4gaa"
+  default: "37i9dQZEVXcHXi4IA5ojNp"
+});
+
+export const playlistArrayState = atom({
+  key: "playlistArrayState",
+  default: []
 });

@@ -13,19 +13,17 @@ import Image from "next/image";
 import { useSession } from 'next-auth/react';
 import { useState, useEffect } from 'react';
 import { useRecoilState } from 'recoil';
-import { playlistIdState, playlistState, selectedPlaylistState } from '../atoms/playlistAtom';
+import { playlistIdState, playlistState, playlistArrayState } from '../atoms/playlistAtom';
 import useSpotify from '../hooks/useSpotify';
+import Link from 'next/link';
 
 function SideBar() {
 
   const spotifyApi = useSpotify();
   const { data: session, status } = useSession();
-  const [playlists, setPlaylists] = useState([]);
+  const [playlists, setPlaylists] = useRecoilState(playlistArrayState);
   const [playlist, setPlaylist] = useRecoilState(playlistState);
   const [playlistId, setPlaylistId] = useRecoilState(playlistIdState);
-
-  // console.log('playlist ID:  ', playlistId);
-  // console.log('playlists:  ',  playlists);
 
   useEffect(() => {
     if(spotifyApi.getAccessToken()) {
@@ -33,9 +31,7 @@ function SideBar() {
         setPlaylists(data.body.items);
       })
     }
-
     spotifyApi.setAccessToken(session?.user.accessToken);
-
   }, [session, spotifyApi]);
 
   const handleSearch = () => {
@@ -45,7 +41,7 @@ function SideBar() {
     }, function(err) {
       console.log('Something went wrong!', err);
     });
-  }
+  };
 
   return (
     <div className='text-gray-500 p-5 text-xs lg:text-sm border-r
@@ -53,23 +49,23 @@ function SideBar() {
       sm:max-w-[12rem] lg:max-w-[15rem] hidden md:inline-flex pb-24
     '>
       <div className='space-y-4'>
-        {/* <button 
-          className='flex items-center space-x-2 hover:text-white'
-          onClick={() => signOut()}
-          >
-          <p>Log out</p>
-        </button> */}
-        <button className='flex items-center space-x-2 hover:text-white'>
-          <HomeIcon className='h-5 w-5' />
-          <p>Home</p>
-        </button>
-        <button className='flex items-center space-x-2 hover:text-white'>
-          <SearchIcon 
-            className='h-5 w-5'
+        <Link href='/'>
+          <button className='flex items-center space-x-2 hover:text-white'>
+            <HomeIcon className='h-5 w-5' />
+            <p>Home</p>
+          </button>
+        </Link>
+        <Link href='/search'>
+          <button
+            className='flex items-center space-x-2 hover:text-white'
             onClick={handleSearch}
-          />
-          <p>Search</p>
-        </button>
+          >
+            <SearchIcon 
+              className='h-5 w-5'
+            />
+            <p>Search</p>
+          </button>
+        </Link>
         <button className='flex items-center space-x-2 hover:text-white'>
           <LibraryIcon className='h-5 w-5' />
           <p>Your Library</p>
@@ -107,14 +103,16 @@ function SideBar() {
         </button>
         {
           playlists.map((playlist) => (
-            <p key={playlist.id} 
-              className='hover:text-white cursor-pointer'
-              onClick={() =>
-                setPlaylistId(playlist.id)
-              }
-            >
-              {playlist.name}
-            </p>
+            <Link key={playlist.id} href='/'>
+              <p 
+                className='hover:text-white cursor-pointer'
+                onClick={() =>
+                  setPlaylistId(playlist.id)
+                }
+              >
+                {playlist.name}
+              </p>
+            </Link>
           ))
         }
       </div>
@@ -122,4 +120,4 @@ function SideBar() {
   )
 }
 
-export default SideBar
+export default SideBar;
